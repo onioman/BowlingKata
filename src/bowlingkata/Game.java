@@ -1,30 +1,27 @@
 package bowlingkata;
 
 public class Game {
+   private static final int GAME_FRAMES = 10;
 
    private Frame firstFrame;
    private Frame currentFrame;
 
    public Game() {
-      this.firstFrame = createLinkedFrames(10);
+      this.firstFrame = createLinkedFrames(GAME_FRAMES);
       this.currentFrame = firstFrame;
    }
 
    private Frame createLinkedFrames(int number) {
       if (number == 1)
-         return new Frame(null, this);
+         return new FinalFrame();
       else
-         return new Frame(createLinkedFrames(number - 1), this);
-   }
-
-   private Frame curFrame() {
-      return currentFrame;
+         return new NormalFrame(createLinkedFrames(number - 1));
    }
 
    public void roll(int pins) {
-      if (curFrame().isComplete())
+      if (currentFrame.isComplete())
          currentFrame = currentFrame.getNextFrame();
-      curFrame().roll(pins);
+      currentFrame.roll(pins);
    }
 
    public int score() {
