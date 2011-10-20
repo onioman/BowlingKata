@@ -1,12 +1,6 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package bowlingkata;
 
-import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -68,7 +62,7 @@ public class GameTest {
         rollMany(18, 1);
         assertEquals(10 + 1 + 18, instance.score());
     }
-    
+
     @Test
     public void twoChainedSpareInGame() {
         instance.roll(5);
@@ -80,13 +74,13 @@ public class GameTest {
                       10 + 1 +
                       16, instance.score());
     }
-    
+
     @Test
     public void allSparesGame() {
         rollMany(20 + 1, 5);
         assertEquals((10 + 5) * 10, instance.score());
     }
-    
+
     @Test
     public void perfectGame() {
         rollMany(10+2, 10);
