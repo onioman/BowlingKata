@@ -82,6 +82,12 @@ public class GameTest {
     }
     
     @Test
+    public void allSparesGame() {
+        rollMany(20 + 1, 5);
+        assertEquals((10 + 5) * 10, instance.score());
+    }
+    
+    @Test
     public void perfectGame() {
         rollMany(10+2, 10);
         assertEquals(300, instance.score());
