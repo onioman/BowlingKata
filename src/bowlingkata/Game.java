@@ -72,8 +72,8 @@ public class Game {
     private int   index;
 
     public Game() {        
-        frames = new Frame[10];
-        for(int i=0;i<10;i++)
+        frames = new Frame[12];
+        for(int i=0;i<12;i++)
             frames[i] = new Frame();
         index = 0;
     }
@@ -92,11 +92,9 @@ public class Game {
     public int score(){
         //return points;
         int total = 0;
-        for(int i=0; i<8; i++){
+        for(int i=0; i<10; i++){
             total += frames[i].score(frames[i+1], frames[i+2]);
         }
-        total += frames[8].score(frames[9],null);
-        total += frames[9].score(null, null);
         return total;
     }
 

@@ -68,10 +68,10 @@ public class GameTest {
         rollMany(18, 1);
         assertEquals(10 + 1 + 18, instance.score());
     }
-
-//    @Test
-//    public void perfectGame() {
-//        rollMany(10+2, 10);
-//        assertEquals(300, instance.score());
-//    }
+    
+    @Test
+    public void perfectGame() {
+        rollMany(10+2, 10);
+        assertEquals(300, instance.score());
+    }
 }
