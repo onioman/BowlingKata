@@ -34,18 +34,21 @@ public class Game {
          return rolls.get(0);
       }
 
-      private int doubleBonus(Frame next) {
-         int bonus = pins;
-         if (next != null && this.isStrike())
-            bonus += next.singleBonus();
+      private int doubleBonus() {
+         int bonus = singleBonus();
+         if (this.isStrike())
+            bonus += nextFrame.singleBonus();
+         else
+            bonus += rolls.get(1);
          return bonus;
       }
 
       private int bonus() {
          if (nextFrame == null)
             return 0;
+
          if (this.isStrike())
-            return nextFrame.doubleBonus(nextFrame.nextFrame);
+            return nextFrame.doubleBonus();
          else if (this.isSpare())
             return nextFrame.singleBonus();
          else
@@ -53,38 +56,48 @@ public class Game {
       }
 
       public int score() {
-         return pins + this.bonus();
+         int score = pins + this.bonus();
+         if (nextFrame != null)
+            score += nextFrame.score();
+         return score;
       }
 
       public boolean isComplete() {
-         return this.isStrike() || (rolls.size() == 2);
+         return (nextFrame != null) &&
+                 (this.isStrike() || (rolls.size() == 2));
+      }
+
+      private Frame getNextFrame() {
+         return this.nextFrame;
       }
    }
-   private Frame[] frames;
-   private int index;
+
+   private Frame firstFrame;
+   private Frame currentFrame;
 
    public Game() {
-      frames = new Frame[12];
-      frames[11] = new Frame(null);
-      for (int i = 10; i >= 0; i--)
-         frames[i] = new Frame(frames[i + 1]);
-      index = 0;
+      this.firstFrame = createLinkedFrames(10);
+      this.currentFrame = firstFrame;
+   }
+
+   private Frame createLinkedFrames(int number) {
+      if (number == 1)
+         return new Frame(null);
+      else
+         return new Frame(createLinkedFrames(number - 1));
    }
 
    private Frame curFrame() {
-      return frames[index];
+      return currentFrame;
    }
 
    public void roll(int pins) {
       if (curFrame().isComplete())
-         index++;
+         currentFrame = currentFrame.getNextFrame();
       curFrame().roll(pins);
    }
 
    public int score() {
-      int total = 0;
-      for (int i = 0; i < 10; i++)
-         total += frames[i].score();
-      return total;
+      return firstFrame.score();
    }
 }
