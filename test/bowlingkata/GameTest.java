@@ -70,6 +70,18 @@ public class GameTest {
     }
     
     @Test
+    public void twoChainedSpareInGame() {
+        instance.roll(5);
+        instance.roll(5);
+        instance.roll(5);
+        instance.roll(5);
+        rollMany(16, 1);
+        assertEquals( 10 + 5 +
+                      10 + 1 +
+                      16, instance.score());
+    }
+    
+    @Test
     public void perfectGame() {
         rollMany(10+2, 10);
         assertEquals(300, instance.score());
