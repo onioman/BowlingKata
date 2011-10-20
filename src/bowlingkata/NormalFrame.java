@@ -1,6 +1,6 @@
 package bowlingkata;
 
-class NormalFrame extends Frame {
+public class NormalFrame extends Frame {
    private final Frame nextFrame;
 
    public NormalFrame(Frame nextFrame) {
@@ -11,7 +11,7 @@ class NormalFrame extends Frame {
    public Frame getNextFrame() {
       return this.nextFrame;
    }
-   
+
    private boolean isStrike() {
       return pins == 10 && rolls.size() == 1;
    }
@@ -21,20 +21,18 @@ class NormalFrame extends Frame {
    }
 
    @Override
-   public int doubleBonus() {
-      int bonus = singleBonus();
-      if (rolls.size() > 1)
-         bonus += rolls.get(1);
-      else
-         bonus += nextFrame.singleBonus();
+   public int sumNextRolls(int numRolls) {
+      int bonus = super.sumNextRolls(numRolls);
+      if (rolls.size()<numRolls)
+         bonus += nextFrame.sumNextRolls(numRolls - rolls.size());
       return bonus;
    }
 
    private int bonus() {
       if (this.isStrike())
-         return nextFrame.doubleBonus();
+         return nextFrame.sumNextRolls(2);
       else if (this.isSpare())
-         return nextFrame.singleBonus();
+         return nextFrame.sumNextRolls(1);
       else
          return 0;
    }

@@ -16,15 +16,16 @@ public abstract class Frame {
       pins += p;
    }
 
-   public int singleBonus() {
-      return rolls.get(0);
+   public int sumNextRolls(int numRolls) {
+      int bonus = 0;
+      for (int i=0; i<rolls.size() && i<numRolls; i++)
+         bonus += rolls.get(i);
+      return bonus;
    }
 
    public abstract boolean isComplete();
 
    public abstract int score();
-
-   public abstract int doubleBonus();
 
    public abstract Frame getNextFrame();
 }
